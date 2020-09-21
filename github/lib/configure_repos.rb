@@ -4,6 +4,11 @@ require "octokit"
 require_relative "./configure_repo"
 
 class ConfigureRepos
+  @@HOOKS_TO_DELETE = %w[
+    https://ci.blue.integration.govuk.digital/github-webhook/
+  ]
+
+
   def configure!
     repos.each do |repo|
       ConfigureRepo.new(repo, client, repo_overrides[repo[:full_name]]).configure!
@@ -15,9 +20,6 @@ class ConfigureRepos
   end
 
   def remove_old_webhooks!
-    HOOKS_TO_DELETE = %w[
-      https://ci.blue.integration.govuk.digital/github-webhook/
-    ]
 
     repos.map do |repo|
       client.hooks(repo).each do |hook|
