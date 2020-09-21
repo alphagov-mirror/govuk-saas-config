@@ -14,6 +14,18 @@ class ConfigureRepos
     puts repos.to_yaml
   end
 
+  def remove_old_webhooks!
+    HOOKS_TO_DELETE = %w[
+      https://ci.blue.integration.govuk.digital/github-webhook/
+    ]
+
+    repos.map do |repo|
+      client.hooks(repo).each do |hook|
+        next unless HOOKS_TO_DELETE.include?(hook.config.url)
+        client.remove_hook(repo, hook.id)
+      end
+  end
+
 private
 
   def repos
