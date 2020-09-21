@@ -24,6 +24,7 @@ class ConfigureRepos
         next unless HOOKS_TO_DELETE.include?(hook.config.url)
         client.remove_hook(repo, hook.id)
       end
+    end
   end
 
 private
