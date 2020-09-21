@@ -94,6 +94,7 @@ private
 
     if jenkinsfile_exists?
       if existing_webhooks.map(&:config).map(&:url).include?("https://ci.blue.integration.govuk.digital/github-webhook/")
+        puts "config: #{existing_webhooks.map(&:config)}"
         client.remove_hook(repo[:full_name], existing_webhooks.map(&:config).map(&:id))
       end
     end
