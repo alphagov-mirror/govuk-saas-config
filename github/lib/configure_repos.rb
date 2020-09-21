@@ -24,7 +24,12 @@ class ConfigureRepos
     repos.map do |repo|
       client.hooks(repo[:full_name]).each do |hook|
         next unless HOOKS_TO_DELETE.include?(hook.config.url)
-        client.remove_hook(repo[:full_name], hook.id)
+        begin
+          client.remove_hook(repo[:full_name], hook.id)
+        rescue => e
+          puts e.message
+          puts e.inspect
+        end
       end
     end
   end
