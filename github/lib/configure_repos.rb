@@ -22,7 +22,7 @@ class ConfigureRepos
   def remove_old_webhooks!
 
     repos.map do |repo|
-      client.hooks(repo).each do |hook|
+      client.hooks(repo[:full_name]).each do |hook|
         next unless HOOKS_TO_DELETE.include?(hook.config.url)
         client.remove_hook(repo[:full_name], hook.id)
       end
