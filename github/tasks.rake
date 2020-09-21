@@ -17,7 +17,7 @@ namespace :github do
       https://ci.blue.integration.govuk.digital/github-webhook/
     ]
 
-    repos.map do |repo|
+    ConfigureRepos.new.repos.map do |repo|
       client.hooks(repo).each do |hook|
         next unless HOOKS_TO_DELETE.include?(hook.config.url)
         client.remove_hook(repo, hook.id)
