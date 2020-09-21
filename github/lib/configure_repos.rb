@@ -4,7 +4,7 @@ require "octokit"
 require_relative "./configure_repo"
 
 class ConfigureRepos
-  @@HOOKS_TO_DELETE = %w[
+  HOOKS_TO_DELETE = %w[
     https://ci.blue.integration.govuk.digital/github-webhook/
   ]
 
